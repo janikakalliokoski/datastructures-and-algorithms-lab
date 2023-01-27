@@ -8,7 +8,11 @@ packages = [{include = "datastructures_and_algorithms_lab"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pylint = "^2.15.10"
 
+
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^2.0.1"
 
 [build-system]
 requires = ["poetry-core"]

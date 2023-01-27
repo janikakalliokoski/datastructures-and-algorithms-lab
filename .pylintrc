@@ -1,0 +1,17 @@
+[MASTER]
+
+load-plugins=pylint.extensions.mccabe
+ignore=apu.py,apu2.py
+
+[MESSAGE CONTROL]
+
+disable=missing-module-docstring,
+        consider-iterating-dictionary,
+        missing-function-docstring,
+        missing-class-docstring
+
+[BASIC]
+
+include-naming-hint=no
+attr-naming-style=snake_case
+argument-naming-style=snake_case
