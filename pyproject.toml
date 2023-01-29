@@ -9,6 +9,7 @@ packages = [{include = "datastructures_and_algorithms_lab"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 pylint = "^2.15.10"
+invoke = "^2.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
