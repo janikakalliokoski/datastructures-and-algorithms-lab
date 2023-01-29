@@ -14,6 +14,8 @@ invoke = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 autopep8 = "^2.0.1"
+pytest = "^7.2.1"
+coverage = "^7.1.0"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,2 +1,4 @@
-apu.py
-apu2.py
+**/__pycache__
+**/.pytest_cache
+.coverage
+htmlcov

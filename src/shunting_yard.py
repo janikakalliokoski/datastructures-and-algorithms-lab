@@ -32,13 +32,14 @@ class ShuntingYard:
         previous: A string containing the previous character(s).
     """
 
-    def __init__(self, expression: str):
+    def __init__(self, given_expression: str):
         """The constructor for the ShuntingYard class.
 
         Args:
             expression (str): the given expression in infix notation.
         """
-        self.expression = re.sub(r'\s+', "", expression)
+        self.given_expression = given_expression
+        self.expression = re.sub(r'\s+', "", self.given_expression)
         self.output = []
         self.operator_stack = []
         self.previous = ""
@@ -70,10 +71,10 @@ class ShuntingYard:
 
             if token.isdigit():
                 self.number_handler(token, next_token)
-            elif token in operator_info.keys():
-                self.operator_handler(token)
             elif token == "-":
                 self.minus_token_handler(token, previous_token, next_token)
+            elif token in operator_info.keys():
+                self.operator_handler(token)
             elif token == ".":
                 self.period_handler(token, next_token, index)
             elif token in ("(", ")"):
@@ -124,23 +125,42 @@ class ShuntingYard:
             raise InvalidInputError
         self.previous += token
 
+    def minus_token_handler(self, token: str, previous_token, next_token):
+        """This method checks if minus token means an operator or negation.
+
+        Args:
+            token (str): Current token (minus / -).
+            previous_token (str | None): Token before minus sign.
+            next_token (str | None): Next token after minus sign.
+        """
+
+        if previous_token is None and next_token == "(":
+            self.output.append("0")
+            self.operator_handler(token)
+        elif previous_token is None or previous_token not in "0123456789)":
+            self.previous += token
+        else:
+            self.operator_handler(token)
+
     def operator_handler(self, token: str):
         """This method is for handling an operator token.
 
         Args:
             token (str): Current token (operator).
         """
-
+        #print(self.operator_stack)
         if not self.operator_stack:
             self.operator_stack.append(token)
         else:
+            #print("loopissa",self.operator_stack)
             while (self.operator_stack[-1] != "("
-                   and ((operator_info[self.operator_stack].precedence\
+                   and ((operator_info[self.operator_stack[-1]].precedence\
                     > operator_info[token].precedence)
-                        or (operator_info[self.operator_stack].precedence\
+                        or (operator_info[self.operator_stack[-1]].precedence\
                              == operator_info[token].precedence
                             and operator_info[token].associativity == "Left"))):
                 self.output.append(self.operator_stack.pop())
+               # print("output", self.output)
                 if len(self.operator_stack) == 0:
                     break
             self.operator_stack.append(token)
@@ -182,25 +202,6 @@ class ShuntingYard:
         if token in operator_info.keys() and next_token in operator_info.keys():
             raise InvalidInputError
 
-    # I'm still working on this method, it does not work correctly
-
-    def minus_token_handler(self, token: str, previous_token, next_token):
-        """This method checks if minus token means an operator or negation.
-
-        Args:
-            token (str): Current token (minus / -).
-            previous_token (str | None): Token before minus sign.
-            next_token (str | None): Next token after minus sign.
-        """
-
-        if previous_token is None and next_token == "(":
-            self.output.append("0")
-            self.operator_handler(token)
-        elif previous_token is None or previous_token.isdigit() or not previous_token == ")":
-            self.previous += token
-        else:
-            self.operator_handler(token)
-
     def finish(self):
         """This method iterates through the operator stack to check if any parentheses remain,
         and adding operators to the output.
@@ -213,8 +214,3 @@ class ShuntingYard:
             if "(" in self.operator_stack or ")" in self.operator_stack:
                 raise MisMatchedParenthesesError
             self.output.append(self.operator_stack.pop())
-
-
-if __name__ == "__main__":
-    exp = input("give an expression: ")
-    print(ShuntingYard(exp))
