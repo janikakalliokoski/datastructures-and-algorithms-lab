@@ -6,4 +6,7 @@ I added pylint to my project and fixed most of the mistakes.
 
 Hours: 6
 
+### 29.1.
+Started today by creating a tasks.py file, so it is easier to run the program from terminal.
+
 ### Total hours: 
