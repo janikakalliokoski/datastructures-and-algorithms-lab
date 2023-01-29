@@ -1,4 +1,7 @@
 # datastructures-and-algorithms-lab
+![GHA workflow badge](https://github.com/janikakalliokoski/datastructures-and-algorithms-lab/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/janikakalliokoski/datastructures-and-algorithms-lab/branch/main/graph/badge.svg?token=I9TZKLLES7)](https://codecov.io/gh/janikakalliokoski/datastructures-and-algorithms-lab)
+
 Project for University of Helsinki's Datastructures and Algorithms Lab course
 
 ## Documentation
