@@ -105,11 +105,11 @@ class TestShuntingYard(unittest.TestCase):
             self.shunting_yard.parse_expression()
 
     def test_exponent_expression(self):
-        self.shunting_yard.expression = "2*(2+2)^2"
+        self.shunting_yard.expression = "2*(2+2)^2+3"
 
         result = self.shunting_yard.parse_expression()
 
-        self.assertEqual(result, "2 2 2 + 2 ^ *")
+        self.assertEqual(result, "2 2 2 + 2 ^ * 3 +")
 
     def test_negative_number_expression(self):
         self.shunting_yard.expression = "-2+2"
