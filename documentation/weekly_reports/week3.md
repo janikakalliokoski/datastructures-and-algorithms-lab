@@ -6,4 +6,10 @@ Today I created tests for calculator class and also put the error messages in to
 
 Hours: 2,5
 
-### Total Hours: 
+### 2.2. & 3.2.
+
+I created the evaluator for the postfix expression.
+
+Hours: 1,5
+
+### Total Hours:

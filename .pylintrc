@@ -1,14 +1,15 @@
 [MASTER]
 
 load-plugins=pylint.extensions.mccabe
-ignore=apu.py,apu2.py
+ignore-patterns=(.)*_test\.py,test_(.)*\.py
 
 [MESSAGE CONTROL]
 
 disable=missing-module-docstring,
         consider-iterating-dictionary,
         missing-function-docstring,
-        missing-class-docstring
+        missing-class-docstring,
+        invalid-name
 
 [BASIC]
 

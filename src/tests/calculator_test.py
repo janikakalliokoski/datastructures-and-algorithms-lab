@@ -46,3 +46,12 @@ class TestCalculator(unittest.TestCase):
         output = self.io.outputs[0][5:-4]
 
         self.assertEqual(output, "Mismatched parentheses error")
+
+    def test_valid_input(self):
+        self.io.set_inputs(["60*10"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, 600.0)
