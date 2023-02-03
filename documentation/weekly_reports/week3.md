@@ -8,7 +8,7 @@ Hours: 2,5
 
 ### 2.2. & 3.2.
 
-I created the evaluator for the postfix expression. I also documented all code I wrote.
+I created the evaluator for the postfix expression.
 
 Hours: 2,5
 
