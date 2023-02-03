@@ -8,8 +8,8 @@ Hours: 2,5
 
 ### 2.2. & 3.2.
 
-I created the evaluator for the postfix expression.
+I created the evaluator for the postfix expression. I also created tests for the Evaluate class.
 
-Hours: 1,5
+Hours: 2,5
 
 ### Total Hours:
