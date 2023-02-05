@@ -38,6 +38,7 @@ class ShuntingYard:
         Args:
             expression (str): the given expression in infix notation.
         """
+
         self.given_expression = given_expression
         self.expression = re.sub(r'\s+', "", self.given_expression)
         self.output = []
@@ -76,7 +77,7 @@ class ShuntingYard:
             elif token in operator_info.keys():
                 self.operator_handler(token)
             elif token == ".":
-                self.period_handler(token, next_token, index)
+                self.period_handler(token, previous_token, next_token, index)
             elif token in ("(", ")"):
                 self.parentheses_handler(token)
             else:
@@ -95,6 +96,7 @@ class ShuntingYard:
             token (str): Current token (number)
             next_token (str | None): The next token in expression.
         """
+
         if not next_token:
             self.output.append(self.previous + token)
         elif next_token.isdigit() or next_token == ".":
@@ -106,7 +108,7 @@ class ShuntingYard:
     # I'm still working on this method, because it works with input e.g. 5+.5 and gives
     # 5 .5 + and it's supposed to raise an error
 
-    def period_handler(self, token: str, next_token, index: int):
+    def period_handler(self, token: str, previous_token, next_token, index: int):
         """This method is for handling a period token.
 
         Args:
@@ -119,7 +121,7 @@ class ShuntingYard:
             InvalidInputError: Error will be raised, if next token is something else than a number.
         """
 
-        if index == 0:
+        if index == 0 or previous_token in operator_info.keys():
             raise InvalidInputError
         if not next_token or not next_token.isdigit():
             raise InvalidInputError
@@ -148,11 +150,10 @@ class ShuntingYard:
         Args:
             token (str): Current token (operator).
         """
-        #print(self.operator_stack)
+
         if not self.operator_stack:
             self.operator_stack.append(token)
         else:
-            #print("loopissa",self.operator_stack)
             while (self.operator_stack[-1] != "("
                    and ((operator_info[self.operator_stack[-1]].precedence\
                     > operator_info[token].precedence)
@@ -160,7 +161,6 @@ class ShuntingYard:
                              == operator_info[token].precedence
                             and operator_info[token].associativity == "Left"))):
                 self.output.append(self.operator_stack.pop())
-               # print("output", self.output)
                 if len(self.operator_stack) == 0:
                     break
             self.operator_stack.append(token)
@@ -210,7 +210,12 @@ class ShuntingYard:
             MisMatchedParenthesesError: Error will be raised if ay parentheses
             are left in the operator stack.
         """
+
         while self.operator_stack:
             if "(" in self.operator_stack or ")" in self.operator_stack:
                 raise MisMatchedParenthesesError
             self.output.append(self.operator_stack.pop())
+
+# if __name__ == "__main__":
+#     exp = "-(2+2)*2"
+#     print(ShuntingYard(exp).parse_expression())

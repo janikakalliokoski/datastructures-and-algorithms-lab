@@ -124,3 +124,9 @@ class TestShuntingYard(unittest.TestCase):
         result = self.shunting_yard.parse_expression()
 
         self.assertEqual(result, "0 2 2 + -")
+
+    def test_decimal_number_cannot_start_with_period(self):
+        self.shunting_yard.expression = "5+.5"
+
+        with self.assertRaises(InvalidInputError):
+            self.shunting_yard.parse_expression()
