@@ -46,3 +46,59 @@ class TestEvaluate(unittest.TestCase):
         result = self.evaluate.evaluate()
 
         self.assertEqual(result, 2.0)
+
+    def test_sin_function(self):
+        self.evaluate.set_expression("90 sin")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 1.0)
+
+    def test_cos_function(self):
+        self.evaluate.set_expression("0 cos")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 1.0)
+
+    def test_tan_function(self):
+        self.evaluate.set_expression("45 tan")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 1.0)
+
+    def test_sqrt_function(self):
+        self.evaluate.set_expression("4 sqrt")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 2.0)
+
+    def test_lg_function(self):
+        self.evaluate.set_expression("10 lg")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 1.0)
+
+    def test_lb_function(self):
+        self.evaluate.set_expression("4 lb")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 2.0)
+
+    def test_ln_function(self):
+        self.evaluate.set_expression("8 ln")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 2.079)
+
+    def test_exp_function(self):
+        self.evaluate.set_expression("8 exp")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 2980.958)

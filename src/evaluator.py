@@ -1,3 +1,6 @@
+import math
+from shunting_yard import functions
+
 class Evaluate:
     """This class calculates the result from the postfix expression that Shunting-Yard
     algorithm parsed.
@@ -24,7 +27,6 @@ class Evaluate:
         Returns:
             float: Calculated value.
         """
-
         for index, token in enumerate(self.expression):
             if token.isdigit() or "." in self.expression[index]:
                 self.stack.append(float(token))
@@ -42,8 +44,39 @@ class Evaluate:
                     self.stack.append(first / second)
                 elif token == "^":
                     self.stack.append(first ** second)
+            elif token in functions:
+                x = self.stack.pop()
+                self.calculate_function(token, x)
 
-        return self.stack.pop()
+        return round(self.stack.pop(),3)
+
+    def calculate_function(self, function: str, x: int):
+        """This method calculates result from functions and adds the result to final result.
+
+        Args:
+            function (str): Function.
+            x (int): Value for the function.
+        """
+
+        if function == "sin":
+            self.stack.append(math.sin(math.radians(x)))
+        elif function == "cos":
+            self.stack.append(math.cos(math.radians(x)))
+        elif function == "tan":
+            self.stack.append(math.tan(math.radians(x)))
+        elif function == "lg":
+            self.stack.append(math.log(x, 10))
+        elif function == "lb":
+            self.stack.append(math.log(x, 2))
+        elif function == "ln":
+            self.stack.append(math.log(x))
+        elif function == "sqrt":
+            self.stack.append(math.sqrt(x))
+        # elif function == "abs":
+        #     self.stack.append(abs(x))
+        # abs is not working yet
+        elif function ==  "exp":
+            self.stack.append(math.exp(x))
 
     def set_expression(self, expression: str):
         """Used for testing only.
@@ -53,3 +86,7 @@ class Evaluate:
         """
 
         self.expression = expression.split(" ")
+
+# if __name__ == "__main__":
+#     exp = "2 3 sin +"
+#     print(Evaluate(exp).evaluate())

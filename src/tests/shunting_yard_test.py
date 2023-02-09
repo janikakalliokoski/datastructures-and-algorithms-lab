@@ -130,3 +130,36 @@ class TestShuntingYard(unittest.TestCase):
 
         with self.assertRaises(InvalidInputError):
             self.shunting_yard.parse_expression()
+
+    def test_functions_length_of_3_work(self):
+        self.shunting_yard.expression = "sin(2)"
+
+        result = self.shunting_yard.parse_expression()
+
+        self.assertEqual(result, "2 sin")
+
+    def test_functions_length_of_2_work(self):
+        self.shunting_yard.expression = "lg(2)"
+
+        result = self.shunting_yard.parse_expression()
+
+        self.assertEqual(result, "2 lg")
+
+    def test_functions_length_of_4_work(self):
+        self.shunting_yard.expression = "sqrt(2)"
+
+        result = self.shunting_yard.parse_expression()
+
+        self.assertEqual(result, "2 sqrt")
+
+    def test_left_parentheses_is_not_next_token_error_is_raised(self):
+        self.shunting_yard.expression = "sin3"
+
+        with self.assertRaises(InvalidInputError):
+            self.shunting_yard.parse_expression()
+
+    def test_an_operator_cannot_follow_function(self):
+        self.shunting_yard.expression = "sin+3"
+
+        with self.assertRaises(InvalidInputError):
+            self.shunting_yard.parse_expression()

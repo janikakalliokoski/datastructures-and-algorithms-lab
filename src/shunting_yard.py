@@ -1,5 +1,6 @@
 import re
 from collections import namedtuple
+from string import ascii_letters
 
 OPInfo = namedtuple('Operator', 'precedence associativity')
 operator_info = {
@@ -10,7 +11,7 @@ operator_info = {
     "^": OPInfo(2, "Right")
 }
 
-functions = ["abs", "cos", "exp", "lb", "lg", "ln", "sin", "sqrt", "tan"]
+functions = ["sin", "cos", "tan", "sqrt", "abs", "exp", "lg", "ln", "lb"]
 
 
 class InvalidInputError(Exception):
@@ -29,6 +30,7 @@ class ShuntingYard:
         expression: The expression which will be parsed.
         output: A list that for storing the output as the algorithm parses the input.
         operator_stack: A list that is used to store operators.
+        function_stack: A list that is used to store functions.
         previous: A string containing the previous character(s).
     """
 
@@ -36,20 +38,21 @@ class ShuntingYard:
         """The constructor for the ShuntingYard class.
 
         Args:
-            expression (str): the given expression in infix notation.
+            given_expression (str): The given expression in infix notation.
         """
 
         self.given_expression = given_expression
         self.expression = re.sub(r'\s+', "", self.given_expression)
         self.output = []
         self.operator_stack = []
+        self.function_stack = []
         self.previous = ""
 
     def parse_expression(self):
         """This method is in charge of parsing the given expression and returning the final output.
 
         This method goes through each token in the given expression to check the tokens type
-        and handle it correctly. This method also checks the given expression for any invalidities.
+        and handles it correctly. This method also checks the given expression for any invalidities.
 
         Raises:
             InvalidInputError: This error is raised if the expression includes invalid characters.
@@ -80,6 +83,8 @@ class ShuntingYard:
                 self.period_handler(token, previous_token, next_token, index)
             elif token in ("(", ")"):
                 self.parentheses_handler(token)
+            elif token in ascii_letters:
+                self.letter_handler(self.expression)
             else:
                 raise InvalidInputError
 
@@ -104,9 +109,6 @@ class ShuntingYard:
         else:
             self.output.append(self.previous + token)
             self.previous = ""
-
-    # I'm still working on this method, because it works with input e.g. 5+.5 and gives
-    # 5 .5 + and it's supposed to raise an error
 
     def period_handler(self, token: str, previous_token, next_token, index: int):
         """This method is for handling a period token.
@@ -186,6 +188,8 @@ class ShuntingYard:
                     self.output.append(current_operator)
                     continue
                 break
+            if self.function_stack:
+                self.output.append(self.function_stack.pop())
 
     def check_for_consecutive_operators(self, token: str, next_token):
         """This method checks if there are more than one operators consecutively.
@@ -202,6 +206,44 @@ class ShuntingYard:
         if token in operator_info.keys() and next_token in operator_info.keys():
             raise InvalidInputError
 
+    def letter_handler(self, expression: str):
+        """This method handles any letters in expression and handles it correctly
+        whether the token is a function or a variable or invalid input.
+
+        Args:
+            expression (str): The given expression.
+        """
+
+        for index in range(len(expression)):
+            if expression[index:index+4].lower() == "sqrt":
+                function = "sqrt"
+                self.function_handler(function.lower(), expression[index+4])
+            if expression[index:index+3].lower() in functions:
+                function = str(expression[index:index+3])
+                self.function_handler(function.lower(), expression[index+3])
+            elif expression[index:index+2].lower() in functions:
+                function = str(expression[index:index+2])
+                self.function_handler(function.lower(), expression[index+2])
+
+    # I'm working on function hanler, because it accepts empty function e.g. sin()
+    # it should raise an error in this case
+
+    def function_handler(self, function: str, next_token):
+        """This method adds a function to the function stack
+
+        Args:
+            function (str): Current token, a function.
+            next_token (str | int | None): Next token.
+
+        Raises:
+            InvalidInputError: Error will be raised if the function is not
+            followed by a left parenthesis.
+        """
+
+        if next_token != "(":
+            raise InvalidInputError
+        self.function_stack.append(function)
+
     def finish(self):
         """This method iterates through the operator stack to check if any parentheses remain,
         and adding operators to the output.
@@ -216,6 +258,6 @@ class ShuntingYard:
                 raise MisMatchedParenthesesError
             self.output.append(self.operator_stack.pop())
 
-# if __name__ == "__main__":
-#     exp = "-(2+2)*2"
-#     print(ShuntingYard(exp).parse_expression())
+if __name__ == "__main__":
+    exp = "sin()"
+    print(ShuntingYard(exp).parse_expression())
