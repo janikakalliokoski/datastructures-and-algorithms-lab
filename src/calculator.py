@@ -39,10 +39,13 @@ class Calculator:
         """
 
         while True:
-            given_expression = self.io.read("Give an expression, exit for exit: ")
+            given_expression = self.io.read("Give an expression, help for instructions, exit for exit: ")
             if given_expression == "exit":
                 self.io.write(f"{BColors.OKCYAN}Exiting...{BColors.ENDC}")
                 break
+            elif given_expression == "help":
+                self.io.write(self.io.help())
+                continue
             try:
                 self.postfix_notation = ShuntingYard(given_expression).parse_expression()
                 result = Evaluate(self.postfix_notation).evaluate()
@@ -55,3 +58,5 @@ class Calculator:
                 self.io.write(f"{BColors.FAIL}Index error{BColors.ENDC}")
             except ValueError:
                 self.io.write(f"{BColors.FAIL}Value error{BColors.ENDC}")
+            except ZeroDivisionError:
+                self.io.write(f"{BColors.FAIL}Division by zero error{BColors.ENDC}")

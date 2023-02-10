@@ -1,5 +1,6 @@
 import unittest
 from calculator import Calculator
+from calculator_io import instructions
 
 class StubIO:
     def __init__(self):
@@ -11,6 +12,9 @@ class StubIO:
 
     def write(self, output):
         self.outputs.append(output)
+
+    def help(self):
+        self.outputs.append(instructions)
 
     def set_inputs(self, inputs: list):
         self.inputs = inputs + ["exit"]
@@ -73,3 +77,21 @@ class TestCalculator(unittest.TestCase):
         output = self.io.outputs[0][5:-4]
 
         self.assertEqual(output, "Index error")
+
+    def test_instructions(self):
+        self.io.set_inputs(["help"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, instructions)
+
+    def test_cannot_divide_by_zero(self):
+        self.io.set_inputs(["1/0"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Division by zero error")
