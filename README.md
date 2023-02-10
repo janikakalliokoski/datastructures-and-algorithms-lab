@@ -7,9 +7,10 @@ Project for University of Helsinki's Datastructures and Algorithms Lab course
 ## Documentation
 - [Project Specification](https://github.com/janikakalliokoski/datastructures-and-algorithms-lab/blob/main/documentation/project_specification.md)
 - [Testing document](https://github.com/janikakalliokoski/datastructures-and-algorithms-lab/blob/main/documentation/testing_document.md)
+- [Implementation document](https://github.com/janikakalliokoski/datastructures-and-algorithms-lab/tree/main/documentation)
 
 ## Weekly reports
 - [week 1](https://github.com/janikakalliokoski/datastructures-and-algorithms-lab/blob/main/documentation/weekly_reports/week1.md)
 - [week 2](https://github.com/janikakalliokoski/datastructures-and-algorithms-lab/blob/main/documentation/weekly_reports/week2.md)
 - [week 3](https://github.com/janikakalliokoski/datastructures-and-algorithms-lab/blob/main/documentation/weekly_reports/week3.md)
-
+- [week 4](https://github.com/janikakalliokoski/datastructures-and-algorithms-lab/blob/main/documentation/weekly_reports/week4.md)
