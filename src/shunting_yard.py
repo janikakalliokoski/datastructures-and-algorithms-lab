@@ -84,7 +84,7 @@ class ShuntingYard:
             elif token in ("(", ")"):
                 self.parentheses_handler(token)
             elif token in ascii_letters:
-                self.letter_handler(self.expression)
+                self.letter_handler(self.expression[index:])
             else:
                 raise InvalidInputError
 
@@ -259,5 +259,5 @@ class ShuntingYard:
             self.output.append(self.operator_stack.pop())
 
 # if __name__ == "__main__":
-#     exp = "sin()"
+#     exp = "sin(-4)+sin(-4)"
 #     print(ShuntingYard(exp).parse_expression())

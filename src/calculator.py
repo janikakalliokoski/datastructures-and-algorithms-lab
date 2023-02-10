@@ -51,3 +51,7 @@ class Calculator:
                 self.io.write(f"{BColors.FAIL}Invalid input error{BColors.ENDC}")
             except MisMatchedParenthesesError:
                 self.io.write(f"{BColors.FAIL}Mismatched parentheses error{BColors.ENDC}")
+            except IndexError:
+                self.io.write(f"{BColors.FAIL}Index error{BColors.ENDC}")
+            except ValueError:
+                self.io.write(f"{BColors.FAIL}Value error{BColors.ENDC}")

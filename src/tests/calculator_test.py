@@ -55,3 +55,21 @@ class TestCalculator(unittest.TestCase):
         output = self.io.outputs[0]
 
         self.assertEqual(output, 600.0)
+
+    def test_empty_error_raises_value_error(self):
+        self.io.set_inputs(["sin()"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Value error")
+
+    def test_only_a_function_raises_index_error(self):
+        self.io.set_inputs(["sin"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Index error")

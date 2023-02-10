@@ -45,7 +45,7 @@ class Evaluate:
                 elif token == "^":
                     self.stack.append(first ** second)
             elif token in functions:
-                x = self.stack.pop()
+                x = int(self.expression[index-1])
                 self.calculate_function(token, x)
 
         return round(self.stack.pop(),3)
@@ -72,9 +72,8 @@ class Evaluate:
             self.stack.append(math.log(x))
         elif function == "sqrt":
             self.stack.append(math.sqrt(x))
-        # elif function == "abs":
-        #     self.stack.append(abs(x))
-        # abs is not working yet
+        elif function == "abs":
+            self.stack.append(abs(x))
         elif function ==  "exp":
             self.stack.append(math.exp(x))
 
@@ -88,5 +87,6 @@ class Evaluate:
         self.expression = expression.split(" ")
 
 # if __name__ == "__main__":
-#     exp = "2 3 sin +"
-#     print(Evaluate(exp).evaluate())
+#     exp = "-4 abs 2 2 * abs +"
+#     exp1 = "sin"
+#     print(Evaluate(exp1).evaluate())

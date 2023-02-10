@@ -102,3 +102,36 @@ class TestEvaluate(unittest.TestCase):
         result = self.evaluate.evaluate()
 
         self.assertEqual(result, 2980.958)
+
+    def test_abs_function(self):
+        self.evaluate.set_expression("-3 abs")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 3.0)
+
+    def test_function_with_negative_number(self):
+        self.evaluate.set_expression("-90 sin")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, -1.0)
+
+    def test_two_functions_in_expression(self):
+        self.evaluate.set_expression("-90 sin -90 sin +")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, -2.0)
+
+    def test_sqrt_function_with_negative_number_raises_error(self):
+        self.evaluate.set_expression("-4 sqrt")
+
+        with self.assertRaises(ValueError):
+            self.evaluate.evaluate()
+
+    def test_empty_function_raises_error(self):
+        self.evaluate.set_expression("sqrt")
+
+        with self.assertRaises(ValueError):
+            self.evaluate.evaluate()
