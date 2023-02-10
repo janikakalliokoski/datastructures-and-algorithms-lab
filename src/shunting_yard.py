@@ -258,6 +258,6 @@ class ShuntingYard:
                 raise MisMatchedParenthesesError
             self.output.append(self.operator_stack.pop())
 
-if __name__ == "__main__":
-    exp = "sin()"
-    print(ShuntingYard(exp).parse_expression())
+# if __name__ == "__main__":
+#     exp = "sin()"
+#     print(ShuntingYard(exp).parse_expression())

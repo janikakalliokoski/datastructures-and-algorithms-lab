@@ -2,3 +2,4 @@
 **/.pytest_cache
 .coverage
 htmlcov
+src/__pycache__
