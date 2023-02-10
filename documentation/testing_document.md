@@ -7,6 +7,6 @@ You can run the tests with command `poetry run invoke coverage` and get the cove
 
 ### Unit testing
 
-I have made unit tests for Calculator, ShuntingYard and Evaluate classes. I have done testing with Python's unittest library.
-The test inputs consists of various input expressions, both valid and invalid ones. The tests also ensure that correct errors are raised when necessary.
+I have made unit tests for Calculator, ShuntingYard and Evaluate classes. I have done the tests with Python's unittest library.
+The test inputs consist of various input expressions, both valid and invalid ones. I have tested various invalid inputs, so I can make sure that all possible scenarios of user inputs are tested. The tests also ensure that correct errors are raised when necessary.
 I created a StubIO class for testing Calculator class so inputs can be read and result written.
