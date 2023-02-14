@@ -84,7 +84,7 @@ class ShuntingYard:
             elif token in ("(", ")"):
                 self.parentheses_handler(token)
             elif token in ascii_letters:
-                self.letter_handler(self.expression[index:])
+                self.letter_handler(self.expression, index)
             else:
                 raise InvalidInputError
 
@@ -206,7 +206,7 @@ class ShuntingYard:
         if token in operator_info.keys() and next_token in operator_info.keys():
             raise InvalidInputError
 
-    def letter_handler(self, expression: str):
+    def letter_handler(self, expression: str, index: int):
         """This method handles any letters in expression and handles it correctly
         whether the token is a function or a variable or invalid input.
 
@@ -214,35 +214,21 @@ class ShuntingYard:
             expression (str): The given expression.
         """
 
-        for index in range(len(expression)):
-            if expression[index:index+4].lower() == "sqrt":
-                function = "sqrt"
-                self.function_handler(function.lower(), expression[index+4])
-            if expression[index:index+3].lower() in functions:
-                function = str(expression[index:index+3])
-                self.function_handler(function.lower(), expression[index+3])
-            elif expression[index:index+2].lower() in functions:
-                function = str(expression[index:index+2])
-                self.function_handler(function.lower(), expression[index+2])
-
-    # I'm working on function hanler, because it accepts empty function e.g. sin()
-    # it should raise an error in this case
-
-    def function_handler(self, function: str, next_token):
-        """This method adds a function to the function stack
-
-        Args:
-            function (str): Current token, a function.
-            next_token (str | int | None): Next token.
-
-        Raises:
-            InvalidInputError: Error will be raised if the function is not
-            followed by a left parenthesis.
-        """
-
-        if next_token != "(":
-            raise InvalidInputError
-        self.function_stack.append(function)
+        if expression[index:index+4] in functions:
+            if expression[index+4] != "(":
+                raise InvalidInputError
+            print(expression[index:index+4])
+            self.function_stack.append(expression[index:index+4])
+        elif expression[index:index+3] in functions:
+            if expression[index+3] != "(":
+                raise InvalidInputError
+            print(expression[index:index+3])
+            self.function_stack.append(expression[index:index+3])
+        elif expression[index:index+2] in functions:
+            if expression[index+2] != "(":
+                raise InvalidInputError
+            print(expression[index:index+2])
+            self.function_stack.append(expression[index:index+2])
 
     def finish(self):
         """This method iterates through the operator stack to check if any parentheses remain,
@@ -258,6 +244,6 @@ class ShuntingYard:
                 raise MisMatchedParenthesesError
             self.output.append(self.operator_stack.pop())
 
-# if __name__ == "__main__":
-#     exp = "sin(-4)+sin(-4)"
-#     print(ShuntingYard(exp).parse_expression())
+if __name__ == "__main__":
+    exp = "lg(3)+cos(-1)^(2-1)"
+    print(ShuntingYard(exp).parse_expression())

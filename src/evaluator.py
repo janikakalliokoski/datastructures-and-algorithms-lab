@@ -86,7 +86,7 @@ class Evaluate:
 
         self.expression = expression.split(" ")
 
-# if __name__ == "__main__":
-#     exp = "-4 abs 2 2 * abs +"
-#     exp1 = "sin"
-#     print(Evaluate(exp1).evaluate())
+if __name__ == "__main__":
+    exp = "-4 abs 2 2 * abs +"
+    exp1 = "4 3 * 12 1 - ^"
+    print(Evaluate(exp1).evaluate())

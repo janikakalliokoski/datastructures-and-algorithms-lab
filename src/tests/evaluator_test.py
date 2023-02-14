@@ -135,3 +135,25 @@ class TestEvaluate(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             self.evaluate.evaluate()
+
+    def test_complex_expression(self):
+        self.evaluate.set_expression("3 sin -1 cos 2 1 - ^ +")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 1.052)
+
+    def test_parentheses_in_exponent(self):
+        self.evaluate.set_expression("2 2 3 * ^")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 64.0)
+
+
+    def test_long_expression(self):
+        self.evaluate.set_expression("4 3 * 12 1 - ^ 5 +")
+
+        result = self.evaluate.evaluate()
+
+        self.assertEqual(result, 743008370693.0)

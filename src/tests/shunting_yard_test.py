@@ -163,3 +163,24 @@ class TestShuntingYard(unittest.TestCase):
 
         with self.assertRaises(InvalidInputError):
             self.shunting_yard.parse_expression()
+
+    def test_complex_expression(self):
+        self.shunting_yard.expression = "sin(3)+cos(-1)^(2-1)"
+
+        result = self.shunting_yard.parse_expression()
+
+        self.assertEqual(result, "3 sin -1 cos 2 1 - ^ +")
+
+    def test_long_expression(self):
+        self.shunting_yard.expression = "(4*3)^(12-1)+5"
+
+        result = self.shunting_yard.parse_expression()
+
+        self.assertEqual(result, "4 3 * 12 1 - ^ 5 +")
+
+    def test_parentheses_in_exponent(self):
+        self.shunting_yard.expression = "2^(2*3)"
+
+        result = self.shunting_yard.parse_expression()
+
+        self.assertEqual(result, "2 2 3 * ^")
