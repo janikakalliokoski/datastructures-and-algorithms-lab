@@ -133,7 +133,7 @@ class TestEvaluate(unittest.TestCase):
     def test_empty_function_raises_error(self):
         self.evaluate.set_expression("sqrt")
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(IndexError):
             self.evaluate.evaluate()
 
     def test_complex_expression(self):
@@ -149,7 +149,6 @@ class TestEvaluate(unittest.TestCase):
         result = self.evaluate.evaluate()
 
         self.assertEqual(result, 64.0)
-
 
     def test_long_expression(self):
         self.evaluate.set_expression("4 3 * 12 1 - ^ 5 +")

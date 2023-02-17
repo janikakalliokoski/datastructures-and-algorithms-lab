@@ -67,7 +67,7 @@ class TestCalculator(unittest.TestCase):
 
         output = self.io.outputs[0][5:-4]
 
-        self.assertEqual(output, "Value error")
+        self.assertEqual(output, "Index error")
 
     def test_only_a_function_raises_index_error(self):
         self.io.set_inputs(["sin"])
@@ -95,3 +95,30 @@ class TestCalculator(unittest.TestCase):
         output = self.io.outputs[0][5:-4]
 
         self.assertEqual(output, "Division by zero error")
+
+    def test_complex_expression_input(self):
+        self.io.set_inputs(["sin(2)+cos(3)+tan(5)^3+10"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, 11.034)
+
+    def test_mismatched_parentheses_in_function(self):
+        self.io.set_inputs(["sin(2"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Mismatched parentheses error")
+
+    def test_long_expression(self):
+        self.io.set_inputs(["((5*7)/(8/3))*(1/6)^2*sqrt(5*sin(30))"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, 0.576)

@@ -2,7 +2,7 @@ class BColors:
     WARNING = '\033[93m'
     ENDC = '\033[0m'
 
-instructions = ["Use periods in decimal numbers",
+instructions = ["Use periods in decimal numbers, e.g. 0.5 and not 0,5",
                 "Correct way to use functions is e.g. sin(90), not sin90",
                 "Trigonometric functions use degrees"]
 

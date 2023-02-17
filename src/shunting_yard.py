@@ -217,17 +217,14 @@ class ShuntingYard:
         if expression[index:index+4] in functions:
             if expression[index+4] != "(":
                 raise InvalidInputError
-            print(expression[index:index+4])
             self.function_stack.append(expression[index:index+4])
         elif expression[index:index+3] in functions:
             if expression[index+3] != "(":
                 raise InvalidInputError
-            print(expression[index:index+3])
             self.function_stack.append(expression[index:index+3])
         elif expression[index:index+2] in functions:
             if expression[index+2] != "(":
                 raise InvalidInputError
-            print(expression[index:index+2])
             self.function_stack.append(expression[index:index+2])
 
     def finish(self):
@@ -245,5 +242,5 @@ class ShuntingYard:
             self.output.append(self.operator_stack.pop())
 
 if __name__ == "__main__":
-    exp = "lg(3)+cos(-1)^(2-1)"
+    exp = "sin(2)+cos(3)+tan(5)^3+10"
     print(ShuntingYard(exp).parse_expression())

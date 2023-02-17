@@ -184,3 +184,15 @@ class TestShuntingYard(unittest.TestCase):
         result = self.shunting_yard.parse_expression()
 
         self.assertEqual(result, "2 2 3 * ^")
+
+    def test_invalid_input_in_sqrt(self):
+        self.shunting_yard.expression = "sqrt2+"
+
+        with self.assertRaises(InvalidInputError):
+            self.shunting_yard.parse_expression()
+
+    def test_invalid_input_in_2_char_function(self):
+        self.shunting_yard.expression = "lg2+"
+
+        with self.assertRaises(InvalidInputError):
+            self.shunting_yard.parse_expression()
