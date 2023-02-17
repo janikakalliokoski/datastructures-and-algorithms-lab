@@ -181,7 +181,3 @@ class Evaluate:
 
         self.expression = expression.split(" ")
 
-if __name__ == "__main__":
-    exp = "-4 abs"
-    exp1 = "sin(2)+cos(3)+tan(5)^3+11"
-    print(Evaluate(exp1).evaluate())

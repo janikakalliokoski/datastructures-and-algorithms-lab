@@ -56,7 +56,5 @@ class Calculator:
                 self.io.write(f"{BColors.FAIL}Mismatched parentheses error{BColors.ENDC}")
             except IndexError:
                 self.io.write(f"{BColors.FAIL}Index error{BColors.ENDC}")
-            except ValueError:
-                self.io.write(f"{BColors.FAIL}Value error{BColors.ENDC}")
             except ZeroDivisionError:
                 self.io.write(f"{BColors.FAIL}Division by zero error{BColors.ENDC}")

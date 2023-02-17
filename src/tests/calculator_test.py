@@ -60,7 +60,7 @@ class TestCalculator(unittest.TestCase):
 
         self.assertEqual(output, 600.0)
 
-    def test_empty_error_raises_value_error(self):
+    def test_empty_error_raises_index_error(self):
         self.io.set_inputs(["sin()"])
 
         self.calculator.start()
