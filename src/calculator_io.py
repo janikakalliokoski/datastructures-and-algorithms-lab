@@ -4,7 +4,9 @@ class BColors:
 
 instructions = ["Use periods in decimal numbers, e.g. 0.5 and not 0,5",
                 "Correct way to use functions is e.g. sin(90), not sin90",
-                "Trigonometric functions use degrees"]
+                "Trigonometric functions use degrees",
+                "Variables must be one letter long and in lowercase",
+                "You must define variables again after restarting the calculator"]
 
 class CalculatorIO:
     def read(self, text="Input"):

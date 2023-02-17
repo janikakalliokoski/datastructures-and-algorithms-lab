@@ -128,17 +128,7 @@ class Evaluate:
             elif token in "+-/*^":
                 second = self.stack.pop()
                 first = self.stack.pop()
-
-                if token == "+":
-                    self.stack.append(first + second)
-                elif token == "-":
-                    self.stack.append(first - second)
-                elif token == "*":
-                    self.stack.append(first * second)
-                elif token == "/":
-                    self.stack.append(first / second)
-                elif token == "^":
-                    self.stack.append(first ** second)
+                self.basic_operations(token, first, second)
             else:
                 try:
                     self.stack.append(int(token))
@@ -146,6 +136,18 @@ class Evaluate:
                     self.stack.append(float(token))
 
         return round(self.stack.pop(),3)
+
+    def basic_operations(self, token, first, second):
+        if token == "+":
+            self.stack.append(first + second)
+        elif token == "-":
+            self.stack.append(first - second)
+        elif token == "*":
+            self.stack.append(first * second)
+        elif token == "/":
+            self.stack.append(first / second)
+        elif token == "^":
+            self.stack.append(first ** second)
 
     def calculate_function(self, function: str, x: int):
         """This method calculates result from functions and adds the result to final result.
@@ -180,4 +182,3 @@ class Evaluate:
         """
 
         self.expression = expression.split(" ")
-

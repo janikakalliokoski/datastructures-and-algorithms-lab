@@ -9,7 +9,8 @@ disable=missing-module-docstring,
         consider-iterating-dictionary,
         missing-function-docstring,
         missing-class-docstring,
-        invalid-name
+        invalid-name,
+        too-few-public-methods
 
 [BASIC]
 

@@ -8,6 +8,6 @@ Hours: 2
 
 ### 17.2.
 
-Today I created even more tests for calculating complex expressions with functions and fixed errors. Now I have tested multiple types of correct and incorrect expressions and the calculator should work correctly.
+Today I created even more tests for calculating complex expressions with functions and fixed errors. Now I have tested multiple types of correct and incorrect expressions and the calculator should work correctly. I also created methods to set variables.
 
-Hours: 2,5
+Hours: 4

@@ -1,3 +1,4 @@
+from string import ascii_lowercase
 from calculator_io import calculator_io
 from shunting_yard import (InvalidInputError,
                            MisMatchedParenthesesError, ShuntingYard)
@@ -30,6 +31,7 @@ class Calculator:
 
         self.io = io
         self.postfix_notation = ""
+        self.variables = {}
 
     def start(self):
         """This method starts the calculator and is in charge of running the calculator.
@@ -39,11 +41,17 @@ class Calculator:
         """
 
         while True:
-            given_expression = self.io.read("Give an expression, help for instructions, exit for exit: ")
+            given_expression = self.io.read(
+                "Give an expression, 'help' for instructions,"+
+                " 'var' for variables, 'exit' for exit: "
+            )
             if given_expression == "exit":
                 self.io.write(f"{BColors.OKCYAN}Exiting...{BColors.ENDC}")
                 break
-            elif given_expression == "help":
+            if given_expression == "var":
+                self.variable()
+                continue
+            if given_expression == "help":
                 self.io.write(self.io.help())
                 continue
             try:
@@ -58,3 +66,53 @@ class Calculator:
                 self.io.write(f"{BColors.FAIL}Index error{BColors.ENDC}")
             except ZeroDivisionError:
                 self.io.write(f"{BColors.FAIL}Division by zero error{BColors.ENDC}")
+
+    def variable(self):
+        """This method is for setting and listing variables.
+        """
+
+        while True:
+            given_input = self.io.read(
+                "Input 'set' to set new variable, 'list' to show variables, 'exit' for exit: "
+            )
+            if given_input == "exit":
+                self.io.write(f"{BColors.OKCYAN}Exiting...{BColors.ENDC}")
+                break
+            if given_input == "set":
+                self.set_variable()
+            elif given_input == "list":
+                self.list_variables()
+
+    def set_variable(self):
+        """This method sets new variables and checks variables names and values validity.
+        """
+
+        while True:
+            var = self.io.read("Input variable's name: ")
+            if var in self.variables:
+                self.io.write(f"{BColors.OKCYAN}Variable's name already in use{BColors.ENDC}")
+                continue
+            check = var in ascii_lowercase
+            if not check or len(var) != 1:
+                print(f"{BColors.OKCYAN}\
+                    Variable's name must be in lowercase letters and 1 letter long\
+                    {BColors.ENDC}")
+                continue
+            break
+
+        while True:
+            value = self.io.read("Input variable's value: ")
+            if "." in value:
+                value_to_set = float(value)
+            else:
+                value_to_set = int(value)
+            break
+
+        self.variables[var] = value_to_set
+
+    def list_variables(self):
+        """This method lists all variables that are set.
+        """
+
+        for var, value in self.variables.items():
+            self.io.write(f"{var} = {value}")
