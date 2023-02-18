@@ -254,3 +254,12 @@ class TestCalculator(unittest.TestCase):
         output = self.io.outputs[0:2]
 
         self.assertEqual(output, ["a = 1", "b = 2"])
+
+    def test_restarting_calculator_gets_rid_of_variables(self):
+        self.io.set_inputs(["var", "list", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "No defined variables")
