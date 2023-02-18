@@ -3,7 +3,7 @@
 ### Project structure
 `CalculatorIO` class is used to read users inputs and printing the output.
 
-`Calculator` class is the base for the calculator.
+`Calculator` class is the base for the calculator. This class is also in charge of defining variables and other methods concerning variables, e.g. listing defined variables.
 
 `ShuntingYard` class is used to create the shunting-yard algorithm. 
 It is in charge of parsing an expression in infix notation and returning it as a postfix notation string.
