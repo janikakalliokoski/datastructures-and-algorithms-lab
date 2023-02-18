@@ -122,3 +122,135 @@ class TestCalculator(unittest.TestCase):
         output = self.io.outputs[0]
 
         self.assertEqual(output, 0.576)
+
+    def test_setting_variable(self):
+        self.io.set_inputs(["var", "set", "a", "1", "exit"])
+
+        self.calculator.start()
+
+        self.assertEqual(self.calculator.variables, {"a": 1})
+
+    def test_try_number_var_name(self):
+        self.io.set_inputs(["var", "set", "5", "b", "1", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Variable's name must be in lowercase letters and 1 letter long")
+        self.assertEqual(self.calculator.variables, {"b": 1})
+
+    def test_try_upper_case_var_name(self):
+        self.io.set_inputs(["var", "set", "B", "b", "1", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Variable's name must be in lowercase letters and 1 letter long")
+        self.assertEqual(self.calculator.variables, {"b": 1})
+
+    def test_try_special_char_var_name(self):
+        self.io.set_inputs(["var", "set", "%", "b", "1", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Variable's name must be in lowercase letters and 1 letter long")
+        self.assertEqual(self.calculator.variables, {"b": 1})
+
+    def test_try_longer_than_1char_var_name(self):
+        self.io.set_inputs(["var", "set", "ab", "b", "1", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Variable's name must be in lowercase letters and 1 letter long")
+        self.assertEqual(self.calculator.variables, {"b": 1})
+
+    def test_decimal_as_value(self):
+        self.io.set_inputs(["var", "set", "a", "0.1", "exit"])
+
+        self.calculator.start()
+
+        self.assertEqual(self.calculator.variables, {"a": 0.1})
+
+    def test_invalid_value(self):
+        self.io.set_inputs(["var", "set", "y", "0..1", "0.10", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Value error")
+        self.assertEqual(self.calculator.variables, {"y": 0.1})
+
+    def test_comma_as_period_in_value(self):
+        self.io.set_inputs(["var", "set", "y", "0,1", "0.10", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Value error")
+        self.assertEqual(self.calculator.variables, {"y": 0.1})
+
+    def test_if_value_starts_period(self):
+        self.io.set_inputs(["var", "set", "y", ".1", "0.10", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Value cannot start with a period")
+        self.assertEqual(self.calculator.variables, {"y": 0.1})
+
+    def test_negative_number_as_value(self):
+        self.io.set_inputs(["var", "set", "a", "-5", "exit"])
+
+        self.calculator.start()
+
+        self.assertEqual(self.calculator.variables, {"a": -5})
+
+    def test_invalid_negative_number_as_value(self):
+        self.io.set_inputs(["var", "set", "a", "--5", "-5", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Value error")
+        self.assertEqual(self.calculator.variables, {"a": -5})
+
+    def test_special_char_in_value(self):
+        self.io.set_inputs(["var", "set", "a", "%5", "-5", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Value error")
+        self.assertEqual(self.calculator.variables, {"a": -5})
+
+    def test_var_name_already_in_use(self):
+        self.calculator.variables = {"a": 1}
+        self.io.set_inputs(["var", "set", "a", "b", "2", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Variable's name already in use")
+        self.assertEqual(self.calculator.variables, {"a": 1, "b": 2})
+
+    def test_list_variables(self):
+        self.calculator.variables = {"a": 1}
+        self.io.set_inputs(["var", "set", "b", "2", "list", "exit"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0:2]
+
+        self.assertEqual(output, ["a = 1", "b = 2"])

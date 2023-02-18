@@ -9,6 +9,7 @@ class BColors:
     """
 
     OKCYAN = '\033[96m'
+    WARNING = '\033[93m'
     FAIL = '\033[91m'
     ENDC = '\033[0m'
 
@@ -90,22 +91,30 @@ class Calculator:
         while True:
             var = self.io.read("Input variable's name: ")
             if var in self.variables:
-                self.io.write(f"{BColors.OKCYAN}Variable's name already in use{BColors.ENDC}")
+                self.io.write(f"{BColors.WARNING}Variable's name already in use{BColors.ENDC}")
                 continue
             check = var in ascii_lowercase
             if not check or len(var) != 1:
-                print(f"{BColors.OKCYAN}\
-                    Variable's name must be in lowercase letters and 1 letter long\
-                    {BColors.ENDC}")
+                self.io.write(f"{BColors.WARNING}"+
+                    "Variable's name must be in lowercase letters and 1 letter long"+
+                    f"{BColors.ENDC}")
                 continue
             break
 
         while True:
             value = self.io.read("Input variable's value: ")
-            if "." in value:
-                value_to_set = float(value)
-            else:
-                value_to_set = int(value)
+            try:
+                if "." in value:
+                    if "." == value[0]:
+                        self.io.write(f"{BColors.WARNING}"+
+                        "Value cannot start with a period"+
+                        f"{BColors.ENDC}")
+                    value_to_set = float(value)
+                else:
+                    value_to_set = int(value)
+            except ValueError:
+                self.io.write(f"{BColors.FAIL}Value error{BColors.ENDC}")
+                continue
             break
 
         self.variables[var] = value_to_set
@@ -113,6 +122,7 @@ class Calculator:
     def list_variables(self):
         """This method lists all variables that are set.
         """
-
+        if len(self.variables) == 0:
+            self.io.write(f"{BColors.WARNING}No defined variables{BColors.ENDC}")
         for var, value in self.variables.items():
             self.io.write(f"{var} = {value}")
