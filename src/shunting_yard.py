@@ -14,14 +14,14 @@ operator_info = {
 functions = ["sin", "cos", "tan", "sqrt", "abs", "exp", "lg", "ln", "lb"]
 constants = ["pi", "e", "tau"]
 
-
 class InvalidInputError(Exception):
     """This class is used to raise an error if an input is invalid.
     """
 
 class MisMatchedParenthesesError(Exception):
     """This class is used to raise an error if there are mismatched parentheses
-    found in a given expression"""
+    found in a given expression."""
+
 
 class ShuntingYard:
     """This class parses a given expression from infix notation to postfix notation using the
@@ -64,8 +64,10 @@ class ShuntingYard:
             str: The expression in postfix notation.
         """
 
+        print("bef:", self.expression)
         if self.variables:
             self.variable_handler()
+        print("af:", self.expression)
 
         for index, token in enumerate(self.expression):
             if index == len(self.expression)-1:
@@ -100,6 +102,9 @@ class ShuntingYard:
         return " ".join(self.output)
 
     def variable_handler(self):
+        """This method changes variable's name into its value in the given expression.
+        """
+
         for name in self.variables:
             value = self.variables[name]
             if value < 0:
@@ -273,11 +278,11 @@ class ShuntingYard:
                 raise MisMatchedParenthesesError
             self.output.append(self.operator_stack.pop())
 
-if __name__ == "__main__":
-    exp = "x-5"
-    exp1 = "-5-5"
-    exp2 = "-5-x"
-    exp3 = "x+y"
-    variables2 = {'x': -5, 'y': 200}
-    variables1 = {}
-    print(ShuntingYard(exp3, variables2).parse_expression())
+# if __name__ == "__main__":
+#     exp = "-x+x-(-x)"
+#     exp1 = "-(-(-5))"
+#     exp2 = "-5-x"
+#     exp3 = "x+y"
+#     variables2 = {'x': -5, 'y': 200}
+#     variables1 = {}
+#     print(ShuntingYard(exp1, variables2).parse_expression())

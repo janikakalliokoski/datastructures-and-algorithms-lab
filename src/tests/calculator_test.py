@@ -78,6 +78,15 @@ class TestCalculator(unittest.TestCase):
 
         self.assertEqual(output, "Index error")
 
+    def test_negative_number_in_sqrt_raises_value_error(self):
+        self.io.set_inputs(["sqrt(-4)"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Value error")
+
     def test_instructions(self):
         self.io.set_inputs(["help"])
 
@@ -263,3 +272,62 @@ class TestCalculator(unittest.TestCase):
         output = self.io.outputs[0][5:-4]
 
         self.assertEqual(output, "No defined variables")
+
+    def test_using_variable_in_expression(self):
+        self.calculator.variables = {'x': 10, 'y': 5.5, 'z': -6}
+        self.io.set_inputs(["x+y+z"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, 9.5)
+
+    def test_using_variable_in_function(self):
+        self.calculator.variables = {'x': 10}
+        self.io.set_inputs(["sin(x)+56"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, 56.174)
+
+    def test_using_non_defined_variable_raises_error(self):
+        self.io.set_inputs(["sin(x)+56"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0][5:-4]
+
+        self.assertEqual(output, "Index error")
+
+    def test_using_negative_variable(self):
+        self.calculator.variables = {'x': -10}
+        self.io.set_inputs(["x-10"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, -20.0)
+
+    def test_negation_of_negative_variable(self):
+        self.calculator.variables = {'x': -5}
+        self.io.set_inputs(["-x"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, 5)
+
+    def test_negation_of_negative_variable(self):
+        self.calculator.variables = {'x': -5}
+        self.io.set_inputs(["-x+x-x"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, 5)

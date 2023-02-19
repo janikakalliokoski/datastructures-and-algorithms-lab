@@ -203,3 +203,11 @@ class TestShuntingYard(unittest.TestCase):
         result = self.shunting_yard.parse_expression()
 
         self.assertEqual(result, "5 -5 + 3 -2 + *")
+
+    def test_defined_variables(self):
+        self.shunting_yard.variables = {'x': 10, 'y': 5.5, 'z': -6}
+        self.shunting_yard.expression = "x+y+z"
+
+        result = self.shunting_yard.parse_expression()
+
+        self.assertEqual(result, "10 5.5 + -6 +")

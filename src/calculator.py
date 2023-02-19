@@ -1,7 +1,8 @@
 from string import ascii_lowercase
 from calculator_io import calculator_io
 from shunting_yard import (InvalidInputError,
-                           MisMatchedParenthesesError, ShuntingYard)
+                           MisMatchedParenthesesError,
+                           ShuntingYard)
 from evaluator import Evaluate
 
 class BColors:
@@ -68,6 +69,8 @@ class Calculator:
                 self.io.write(f"{BColors.FAIL}Index error{BColors.ENDC}")
             except ZeroDivisionError:
                 self.io.write(f"{BColors.FAIL}Division by zero error{BColors.ENDC}")
+            except ValueError:
+                self.io.write(f"{BColors.FAIL}Value error{BColors.ENDC}")
 
     def variable(self):
         """This method is for setting and listing variables.
@@ -110,6 +113,7 @@ class Calculator:
                         self.io.write(f"{BColors.WARNING}"+
                         "Value cannot start with a period"+
                         f"{BColors.ENDC}")
+                        continue
                     value_to_set = float(value)
                 else:
                     value_to_set = int(value)
