@@ -56,7 +56,8 @@ class Calculator:
                 self.io.write(self.io.help())
                 continue
             try:
-                self.postfix_notation = ShuntingYard(given_expression).parse_expression()
+                self.postfix_notation = ShuntingYard(given_expression,
+                                        self.variables).parse_expression()
                 result = Evaluate(self.postfix_notation).evaluate()
                 self.io.write(result)
             except InvalidInputError:

@@ -4,7 +4,7 @@ from shunting_yard import (InvalidInputError,
 
 class TestShuntingYard(unittest.TestCase):
     def setUp(self):
-        self.shunting_yard = ShuntingYard("")
+        self.shunting_yard = ShuntingYard("", {})
 
     def test_sum_expression(self):
         self.shunting_yard.expression = "3+3"
@@ -196,3 +196,10 @@ class TestShuntingYard(unittest.TestCase):
 
         with self.assertRaises(InvalidInputError):
             self.shunting_yard.parse_expression()
+
+    def test_parse_expression_with_multiple_parentheses(self):
+        self.shunting_yard.expression = "(5+(-5))*(3+(-2))"
+
+        result = self.shunting_yard.parse_expression()
+
+        self.assertEqual(result, "5 -5 + 3 -2 + *")

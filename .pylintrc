@@ -3,6 +3,10 @@
 load-plugins=pylint.extensions.mccabe
 ignore-patterns=(.)*_test\.py,test_(.)*\.py
 
+[DESIGN]
+max-complexity=13
+max-branches=13
+
 [MESSAGE CONTROL]
 
 disable=missing-module-docstring,

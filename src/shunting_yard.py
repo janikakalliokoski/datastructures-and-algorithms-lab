@@ -12,6 +12,7 @@ operator_info = {
 }
 
 functions = ["sin", "cos", "tan", "sqrt", "abs", "exp", "lg", "ln", "lb"]
+constants = ["pi", "e", "tau"]
 
 
 class InvalidInputError(Exception):
@@ -34,7 +35,7 @@ class ShuntingYard:
         previous: A string containing the previous character(s).
     """
 
-    def __init__(self, given_expression: str):
+    def __init__(self, given_expression: str, variables: dict):
         """The constructor for the ShuntingYard class.
 
         Args:
@@ -47,6 +48,7 @@ class ShuntingYard:
         self.operator_stack = []
         self.function_stack = []
         self.previous = ""
+        self.variables = variables
 
     def parse_expression(self):
         """This method is in charge of parsing the given expression and returning the final output.
@@ -54,11 +56,16 @@ class ShuntingYard:
         This method goes through each token in the given expression to check the tokens type
         and handles it correctly. This method also checks the given expression for any invalidities.
 
+        This method also handles defined variables.
+
         Raises:
             InvalidInputError: This error is raised if the expression includes invalid characters.
         Returns:
             str: The expression in postfix notation.
         """
+
+        if self.variables:
+            self.variable_handler()
 
         for index, token in enumerate(self.expression):
             if index == len(self.expression)-1:
@@ -91,6 +98,14 @@ class ShuntingYard:
         self.finish()
 
         return " ".join(self.output)
+
+    def variable_handler(self):
+        for name in self.variables:
+            value = self.variables[name]
+            if value < 0:
+                self.expression = self.expression.replace(name, f"({str(value)})")
+            else:
+                self.expression = self.expression.replace(name, str(value))
 
     def number_handler(self, token: str, next_token):
         """This method is for handling a number token.
@@ -208,24 +223,41 @@ class ShuntingYard:
 
     def letter_handler(self, expression: str, index: int):
         """This method handles any letters in expression and handles it correctly
-        whether the token is a function or a variable or invalid input.
+        whether the token is a function, a variable, constant or invalid input.
 
         Args:
             expression (str): The given expression.
         """
 
         if expression[index:index+4] in functions:
-            if expression[index+4] != "(":
-                raise InvalidInputError
-            self.function_stack.append(expression[index:index+4])
+            function = expression[index:index+4]
+            next_char = expression[index+4]
+            self.function_handler(function, next_char)
         elif expression[index:index+3] in functions:
-            if expression[index+3] != "(":
-                raise InvalidInputError
-            self.function_stack.append(expression[index:index+3])
+            function = expression[index:index+3]
+            next_char = expression[index+3]
+            self.function_handler(function, next_char)
         elif expression[index:index+2] in functions:
-            if expression[index+2] != "(":
-                raise InvalidInputError
-            self.function_stack.append(expression[index:index+2])
+            function = expression[index:index+2]
+            next_char = expression[index+2]
+            self.function_handler(function, next_char)
+
+    def function_handler(self, function: str, next_char):
+        """This method checks if a left parentheses follows the function and
+        pushes the function to the function stack.
+
+        Args:
+            function (str): Function to be handled.
+            next_char : The next token in expression after a function.
+
+        Raises:
+            InvalidInputError: Error will be raised if a left parentheses
+            does not follow the function.
+        """
+
+        if next_char != "(":
+            raise InvalidInputError
+        self.function_stack.append(function)
 
     def finish(self):
         """This method iterates through the operator stack to check if any parentheses remain,
@@ -240,3 +272,12 @@ class ShuntingYard:
             if "(" in self.operator_stack or ")" in self.operator_stack:
                 raise MisMatchedParenthesesError
             self.output.append(self.operator_stack.pop())
+
+if __name__ == "__main__":
+    exp = "x-5"
+    exp1 = "-5-5"
+    exp2 = "-5-x"
+    exp3 = "x+y"
+    variables2 = {'x': -5, 'y': 200}
+    variables1 = {}
+    print(ShuntingYard(exp3, variables2).parse_expression())

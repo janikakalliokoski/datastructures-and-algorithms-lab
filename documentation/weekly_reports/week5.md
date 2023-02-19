@@ -17,3 +17,7 @@ Hours: 4
 Today I tested the methods concerning variables. I tried to think about every possible invalid inputs that an user may use.
 
 Hours: 2
+
+### 19.2.
+
+I got the peer review today and I made sure that I fixed errors that my peer evaluator mentioned. My calculator is pretty much done in my opinion, but since I have some time left, next week I'm going to add pi, e and tau as mathematical constants to the calculator.
