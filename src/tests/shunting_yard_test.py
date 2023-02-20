@@ -116,7 +116,7 @@ class TestShuntingYard(unittest.TestCase):
 
         result = self.shunting_yard.parse_expression()
 
-        self.assertEqual(result, "-2 2 +")
+        self.assertEqual(result, "0 2 - 2 +")
 
     def test_minus_token_and_then_parentheses_adds_0_to_output(self):
         self.shunting_yard.expression = "-(2+2)"
@@ -169,7 +169,7 @@ class TestShuntingYard(unittest.TestCase):
 
         result = self.shunting_yard.parse_expression()
 
-        self.assertEqual(result, "3 sin -1 cos 2 1 - ^ +")
+        self.assertEqual(result, "3 sin 0 1 - cos 2 1 - ^ +")
 
     def test_long_expression(self):
         self.shunting_yard.expression = "(4*3)^(12-1)+5"
@@ -202,7 +202,7 @@ class TestShuntingYard(unittest.TestCase):
 
         result = self.shunting_yard.parse_expression()
 
-        self.assertEqual(result, "5 -5 + 3 -2 + *")
+        self.assertEqual(result, "5 0 5 - + 3 0 2 - + *")
 
     def test_defined_variables(self):
         self.shunting_yard.variables = {'x': 10, 'y': 5.5, 'z': -6}
@@ -210,4 +210,4 @@ class TestShuntingYard(unittest.TestCase):
 
         result = self.shunting_yard.parse_expression()
 
-        self.assertEqual(result, "10 5.5 + -6 +")
+        self.assertEqual(result, "10 5.5 + 0 6 - +")

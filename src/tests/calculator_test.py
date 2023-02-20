@@ -51,6 +51,15 @@ class TestCalculator(unittest.TestCase):
 
         self.assertEqual(output, "Mismatched parentheses error")
 
+    def test_many_negations_in_expression(self):
+        self.io.set_inputs(["-(-(-(7)))+10"])
+
+        self.calculator.start()
+
+        output = self.io.outputs[0]
+
+        self.assertEqual(output, 3)
+
     def test_valid_input(self):
         self.io.set_inputs(["60*10"])
 
@@ -106,7 +115,7 @@ class TestCalculator(unittest.TestCase):
         self.assertEqual(output, "Division by zero error")
 
     def test_complex_expression_input(self):
-        self.io.set_inputs(["sin(2)+cos(3)+tan(5)^3+10"])
+        self.io.set_inputs(["sin(2)+cos(-3)+tan(5)^3+10"])
 
         self.calculator.start()
 
@@ -322,12 +331,12 @@ class TestCalculator(unittest.TestCase):
 
         self.assertEqual(output, 5)
 
-    def test_negation_of_negative_variable(self):
-        self.calculator.variables = {'x': -5}
-        self.io.set_inputs(["-x+x-x"])
+    def test_expression_that_uses_many_vars(self):
+        self.calculator.variables = {'x': -5, 'y': 13}
+        self.io.set_inputs(["-x+x-(y-4)*x*(-y+(-y))"])
 
         self.calculator.start()
 
         output = self.io.outputs[0]
 
-        self.assertEqual(output, 5)
+        self.assertEqual(output, -1170)

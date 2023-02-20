@@ -88,5 +88,6 @@ class Evaluate:
         self.expression = expression.split(" ")
 
 # if __name__ == "__main__":
-#     exp = "5 -5 + 3 -2 + *"
+#     exp = "0 0 5 - - 0 5 - + 13 4 - 0 5 - * 0 13 - 0 13 - + * -"
+#     exp2 = "0 5 - 5 + 0 5 - - 5 + 5 + 0 5 - 0 5 - - +"
 #     print(Evaluate(exp).evaluate())

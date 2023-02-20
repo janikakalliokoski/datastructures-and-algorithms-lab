@@ -26,6 +26,6 @@ I took defined variables into use in shunting-yard algorithm and tested those me
 
 My calculator is pretty much done in my opinion, but since I have some time left, next week I'm going to add pi, e and tau as mathematical constants to the calculator.
 
-### Hours: 3,5
+Hours: 3,5
 
 ## Total hours: 9,5

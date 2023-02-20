@@ -64,10 +64,10 @@ class ShuntingYard:
             str: The expression in postfix notation.
         """
 
-        print("bef:", self.expression)
         if self.variables:
             self.variable_handler()
-        print("af:", self.expression)
+
+        self.expression = self.expression.replace("(-", "(0-")
 
         for index, token in enumerate(self.expression):
             if index == len(self.expression)-1:
@@ -85,7 +85,7 @@ class ShuntingYard:
             if token.isdigit():
                 self.number_handler(token, next_token)
             elif token == "-":
-                self.minus_token_handler(token, previous_token, next_token)
+                self.minus_token_handler(token, previous_token)
             elif token in operator_info.keys():
                 self.operator_handler(token)
             elif token == ".":
@@ -149,7 +149,7 @@ class ShuntingYard:
             raise InvalidInputError
         self.previous += token
 
-    def minus_token_handler(self, token: str, previous_token, next_token):
+    def minus_token_handler(self, token: str, previous_token):
         """This method checks if minus token means an operator or negation.
 
         Args:
@@ -158,11 +158,9 @@ class ShuntingYard:
             next_token (str | None): Next token after minus sign.
         """
 
-        if previous_token is None and next_token == "(":
+        if previous_token is None:
             self.output.append("0")
             self.operator_handler(token)
-        elif previous_token is None or previous_token not in "0123456789)":
-            self.previous += token
         else:
             self.operator_handler(token)
 
@@ -266,7 +264,8 @@ class ShuntingYard:
 
     def finish(self):
         """This method iterates through the operator stack to check if any parentheses remain,
-        and adding operators to the output.
+        and adding operators to the output. This method also checks for extra minus signs in a
+        number token and eliminates them.
 
         Raises:
             MisMatchedParenthesesError: Error will be raised if ay parentheses
@@ -279,10 +278,6 @@ class ShuntingYard:
             self.output.append(self.operator_stack.pop())
 
 # if __name__ == "__main__":
-#     exp = "-x+x-(-x)"
-#     exp1 = "-(-(-5))"
-#     exp2 = "-5-x"
-#     exp3 = "x+y"
-#     variables2 = {'x': -5, 'y': 200}
-#     variables1 = {}
-#     print(ShuntingYard(exp1, variables2).parse_expression())
+#     exp = "-x+x-(y-4)*x*(-y+(-y))"
+#     variables2 = {'x': -5, 'y': 13}
+#     print(ShuntingYard(exp, variables2).parse_expression())
