@@ -1,3 +1,24 @@
 # User guide
 
-Clone the project to your computer. Then move into the repository and run command `poetry install`. Run command `poetry run invoke start` to start the calculator. Run tests by running command `poetry run invoke coverage`. You can see the coverage report by running command `poetry run invoke coverage-report` and open it by running `poetry run invoke open-html-report`.
+Clone the project to your computer. Then move into the repository.
+
+Install dependencies
+```bash
+poetry install
+```
+Start the calculator
+```bash
+poetry run invoke start
+```
+Run tests
+```bash
+poetry run invoke coverage
+```
+Get coverage report
+```bash
+poetry run invoke coverage-report
+```
+Open the coverage report
+```bash
+poetry run invoke open-html-report
+```
