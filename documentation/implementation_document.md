@@ -29,3 +29,4 @@ I have tried to test every possible input an user may use, both valid and invali
 - https://en.wikipedia.org/wiki/Shunting_yard_algorithm
 - https://gist.github.com/ollybritton/3ecdd2b28344b0b25c547cbfcb807ddc
 - https://www.scaler.com/topics/postfix-evaluation/
+- https://leetcode.com/problems/basic-calculator/solutions/1662949/python-actually-working-shunting-yard-that-passes-all-edge-cases/
