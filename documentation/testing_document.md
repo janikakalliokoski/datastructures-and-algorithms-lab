@@ -15,8 +15,10 @@ Open the html report
 poetry run invoke open-html-report
 ```
 
+![image](https://user-images.githubusercontent.com/96131752/221557557-9554b6a8-9e9c-4197-beed-21a711b7bf5a.png)
+
 [![codecov](https://codecov.io/gh/janikakalliokoski/datastructures-and-algorithms-lab/branch/main/graph/badge.svg?token=I9TZKLLES7)](https://codecov.io/gh/janikakalliokoski/datastructures-and-algorithms-lab)
-See the coverage report and how the unit testing is divided by clicking the codecov badge.
+See how the unit testing is divided by clicking the codecov badge.
 
 ### Unit testing and correctness testing
 
