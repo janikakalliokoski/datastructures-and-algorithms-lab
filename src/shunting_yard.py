@@ -12,7 +12,6 @@ operator_info = {
 }
 
 functions = ["sin", "cos", "tan", "sqrt", "abs", "exp", "lg", "ln", "lb"]
-constants = ["pi", "e", "tau"]
 
 class InvalidInputError(Exception):
     """This class is used to raise an error if an input is invalid.
