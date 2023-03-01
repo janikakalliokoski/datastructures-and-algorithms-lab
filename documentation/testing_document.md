@@ -15,7 +15,8 @@ Open the html report
 poetry run invoke open-html-report
 ```
 
-![image](https://user-images.githubusercontent.com/96131752/221557557-9554b6a8-9e9c-4197-beed-21a711b7bf5a.png)
+![image](https://user-images.githubusercontent.com/96131752/222115871-5fc7dd86-5295-4cf1-a93e-679eb4f310f8.png)
+
 
 [![codecov](https://codecov.io/gh/janikakalliokoski/datastructures-and-algorithms-lab/branch/main/graph/badge.svg?token=I9TZKLLES7)](https://codecov.io/gh/janikakalliokoski/datastructures-and-algorithms-lab)
 See how the unit testing is divided by clicking the codecov badge.
