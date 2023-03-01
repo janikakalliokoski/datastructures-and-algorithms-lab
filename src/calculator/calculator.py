@@ -1,9 +1,9 @@
 from string import ascii_lowercase
-from calculator_io import calculator_io
-from shunting_yard import (InvalidInputError,
+from calculator.calculator_io import calculator_io
+from algorithms.shunting_yard import (InvalidInputError,
                            MisMatchedParenthesesError,
                            ShuntingYard)
-from evaluator import Evaluate
+from algorithms.evaluator import Evaluate
 
 class BColors:
     """Colors for text UI.
@@ -88,6 +88,20 @@ class Calculator:
             elif given_input == "list":
                 self.list_variables()
 
+    def check_variable_name(self, variable):
+        """This method is tp check if variable name is valid.
+
+        Args:
+            variable (str): Variable to be set.
+
+        Returns:
+            Boolean: True if variable name is valid and False if variable name is invalid.
+        """
+
+        if variable not in ascii_lowercase or len(variable) != 1:
+            return False
+        return True
+
     def set_variable(self):
         """This method sets new variables and checks variables names and values validity.
         """
@@ -97,8 +111,8 @@ class Calculator:
             if var in self.variables:
                 self.io.write(f"{BColors.WARNING}Variable's name already in use{BColors.ENDC}")
                 continue
-            check = var in ascii_lowercase
-            if not check or len(var) != 1:
+
+            if not self.check_variable_name(var):
                 self.io.write(f"{BColors.WARNING}"+
                     "Variable's name must be in lowercase letters and 1 letter long"+
                     f"{BColors.ENDC}")

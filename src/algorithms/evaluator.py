@@ -1,5 +1,5 @@
 import math
-from shunting_yard import functions
+from algorithms.shunting_yard import functions
 
 class Evaluate:
     """This class calculates the result from the postfix expression that Shunting-Yard
@@ -50,7 +50,7 @@ class Evaluate:
             self.stack.append(first * second)
         elif token == "/":
             self.stack.append(first / second)
-        elif token == "^":
+        else: # token = ^
             self.stack.append(first ** second)
 
     def calculate_function(self, function: str, x: int):
@@ -76,7 +76,7 @@ class Evaluate:
             self.stack.append(math.sqrt(x))
         elif function == "abs":
             self.stack.append(abs(x))
-        elif function ==  "exp":
+        else: # function =  exp
             self.stack.append(math.exp(x))
 
     def set_expression(self, expression: str):

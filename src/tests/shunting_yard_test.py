@@ -1,5 +1,5 @@
 import unittest
-from shunting_yard import (InvalidInputError,
+from algorithms.shunting_yard import (InvalidInputError,
                            MisMatchedParenthesesError, ShuntingYard)
 
 class TestShuntingYard(unittest.TestCase):

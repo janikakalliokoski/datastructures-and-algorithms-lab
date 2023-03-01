@@ -1,5 +1,5 @@
 import unittest
-from evaluator import Evaluate
+from algorithms.evaluator import Evaluate
 
 class TestEvaluate(unittest.TestCase):
     def setUp(self):

@@ -1,6 +1,6 @@
 import unittest
-from calculator import Calculator
-from calculator_io import instructions
+from calculator.calculator import Calculator
+from calculator.calculator_io import instructions
 
 class StubIO:
     def __init__(self):
