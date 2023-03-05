@@ -275,8 +275,3 @@ class ShuntingYard:
             if "(" in self.operator_stack or ")" in self.operator_stack:
                 raise MisMatchedParenthesesError
             self.output.append(self.operator_stack.pop())
-
-# if __name__ == "__main__":
-#     exp = "-x+x-(y-4)*x*(-y+(-y))"
-#     variables2 = {'x': -5, 'y': 13}
-#     print(ShuntingYard(exp, variables2).parse_expression())
