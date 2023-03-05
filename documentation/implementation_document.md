@@ -21,6 +21,7 @@ I have tried to test every possible input an user may use, both valid and invali
 
 #### Improvement suggestions:
 - switch between radians and degrees when using trigonometric funtions
+- add pi, tau and e as mathematical constants
 - add inverse functions of sin, cos and tan
 - add permutation (nPr) and combination (nCr)
 - add n. root of x operations (index of root)
